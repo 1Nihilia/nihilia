@@ -96,19 +96,16 @@
       transform: translateY(-1px);
     }
 
-    .copy-row {
-      text-align: left;
+    .ext-icon {
+      width: 16px;
+      height: 16px;
+      color: rgba(222, 198, 204, 0.55);
+      transition: color 0.16s ease, transform 0.16s ease;
     }
 
-    .discord-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .meta {
-      font-size: 0.82rem;
-      color: rgba(222, 198, 204, 0.62);
+    .btn:hover .ext-icon {
+      color: #faf5f7;
+      transform: translate(2px, -2px);
     }
 
     .copy-btn {
@@ -147,25 +144,34 @@
     <div class="links">
       <a class="btn" href="https://open.spotify.com/user/314tsfyhizcxmpy4m5goltyam73q" target="_blank" rel="noopener noreferrer">
         <span>Spotify</span>
-        <span class="meta">profile</span>
+        <svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
       </a>
 
       <a class="btn" href="https://steamcommunity.com/id/1sirius/" target="_blank" rel="noopener noreferrer">
         <span>Steam</span>
-        <span class="meta">1sirius</span>
+        <svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
       </a>
 
       <a class="btn" href="https://stats.fm/nihilia" target="_blank" rel="noopener noreferrer">
         <span>stats.fm</span>
-        <span class="meta">@nihilia</span>
+        <svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
       </a>
 
       <div class="copy-row">
-        <div class="discord-info">
-          <span>Discord</span>
-          <span class="meta" id="discord-user">nihilia.</span>
-        </div>
-        <button class="copy-btn" type="button" onclick="copyDiscord(this)">Copy</button>
+        <span>Discord</span>
+        <button class="copy-btn" type="button" data-copy="nihilia." onclick="copyDiscord(this)">Copy</button>
       </div>
     </div>
   </main>
@@ -187,7 +193,7 @@
     }
 
     function copyDiscord(btn) {
-      const text = document.getElementById("discord-user").textContent.trim();
+      const text = btn.dataset.copy;
       const original = btn.dataset.originalLabel || btn.textContent;
       btn.dataset.originalLabel = original;
 
