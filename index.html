@@ -270,25 +270,42 @@
 
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-    const titleTarget = "@nihilia";
-    let titleIdx = 0;
-    let titlePause = false;
+    // Ciclo contínuo: escreve "@nihilia" -> apaga até "@" -> reescreve "nihilia"
+    const prefix = "@";
+    const handle = "nihilia";
+    let currentText = "";
+    let phase = "typing-full"; // "typing-full" | "deleting-to-at" | "typing-handle"
 
     function animateTitle() {
-      if (!titlePause) {
-        if (titleIdx <= titleTarget.length) {
-          document.title = titleTarget.slice(0, titleIdx) || "\u200B";
-          titleIdx++;
+      if (phase === "typing-full") {
+        const full = prefix + handle;
+        if (currentText.length < full.length) {
+          currentText = full.slice(0, currentText.length + 1);
+          document.title = currentText;
           setTimeout(animateTitle, 150);
         } else {
-          titlePause = true;
+          phase = "deleting-to-at";
           setTimeout(animateTitle, 900);
         }
-      } else {
-        titlePause = false;
-        titleIdx = 0;
-        document.title = "\u200B";
-        setTimeout(animateTitle, 450);
+      } else if (phase === "deleting-to-at") {
+        if (currentText.length > prefix.length) {
+          currentText = currentText.slice(0, currentText.length - 1);
+          document.title = currentText;
+          setTimeout(animateTitle, 100);
+        } else {
+          phase = "typing-handle";
+          setTimeout(animateTitle, 350);
+        }
+      } else if (phase === "typing-handle") {
+        const handleTyped = currentText.slice(prefix.length);
+        if (handleTyped.length < handle.length) {
+          currentText = prefix + handle.slice(0, handleTyped.length + 1);
+          document.title = currentText;
+          setTimeout(animateTitle, 150);
+        } else {
+          phase = "deleting-to-at";
+          setTimeout(animateTitle, 900);
+        }
       }
     }
 
@@ -317,11 +334,18 @@
         cover: "https://img.youtube.com/vi/_wlOcEF_n5o/hqdefault.jpg"
       },
       {
-        id: "pi7334n4cdo",
-        title: "I WANNA BE YOUR BOYFRIEND",
+        id: "WcDDXYMwUS8",
+        title: "HEARTACHE",
         artist: "HOT FREAKS",
-        duration: "02:37",
-        cover: "https://img.youtube.com/vi/pi7334n4cdo/hqdefault.jpg"
+        duration: "03:43",
+        cover: "https://img.youtube.com/vi/WcDDXYMwUS8/hqdefault.jpg"
+      },
+      {
+        id: "Rl089HxOPkw",
+        title: "ACROSS THE SEA",
+        artist: "WEEZER",
+        duration: "04:33",
+        cover: "https://img.youtube.com/vi/Rl089HxOPkw/hqdefault.jpg"
       }
     ];
 
@@ -360,9 +384,9 @@
         row.onclick = () => selectTrack(idx, true);
 
         const num = String(idx + 1).padStart(2, "0");
-        const prefix = active ? (isPlayingState ? "&#9654;" : "&#9632;") : "";
+        const prefixIcon = active ? (isPlayingState ? "&#9654;" : "&#9632;") : "";
         row.innerHTML = `
-          <span class="truncate">${prefix} ${num}. ${track.title}</span>
+          <span class="truncate">${prefixIcon} ${num}. ${track.title}</span>
           <span class="text-neutral-400 text-[10px] ml-2 shrink-0">${track.duration}</span>
         `;
         tracklistEl.appendChild(row);
