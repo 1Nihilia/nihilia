@@ -16,13 +16,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 28px 20px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: #f2eef0;
+      color: #f4eff1;
       background-color: #060507;
       background-image:
-        radial-gradient(circle at 50% 30%, rgba(155, 18, 38, 0.14), rgba(5, 4, 6, 0.88) 72%),
-        linear-gradient(180deg, rgba(6, 5, 7, 0.58) 0%, rgba(6, 5, 7, 0.84) 100%),
+        radial-gradient(circle at 50% 28%, rgba(175, 18, 38, 0.16), rgba(5, 4, 6, 0.9) 74%),
+        linear-gradient(180deg, rgba(6, 5, 7, 0.52) 0%, rgba(6, 5, 7, 0.84) 100%),
         url("Nihiihihi_20260829163758.webp");
       background-size: cover;
       background-position: center 25%;
@@ -31,92 +31,116 @@
 
     .card {
       width: 100%;
-      max-width: 390px;
-      padding: 28px 22px;
-      border-radius: 14px;
-      background: rgba(9, 8, 11, 0.82);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(185, 28, 46, 0.28);
+      max-width: 430px;
+      padding: 32px 24px 28px;
+      border-radius: 16px;
+      background: rgba(9, 7, 11, 0.84);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(198, 28, 48, 0.34);
       box-shadow:
-        0 24px 60px rgba(0, 0, 0, 0.78),
-        0 0 28px rgba(130, 12, 28, 0.14);
+        0 26px 68px rgba(0, 0, 0, 0.84),
+        0 0 34px rgba(155, 14, 32, 0.18),
+        inset 0 1px 0 rgba(255, 230, 235, 0.06);
       text-align: center;
     }
 
     .handle {
-      font-size: 1.55rem;
+      font-size: 1.65rem;
       font-weight: 700;
-      letter-spacing: 0.03em;
-      color: #f7f3f5;
-      text-shadow: 0 0 14px rgba(185, 28, 46, 0.35);
+      letter-spacing: 0.02em;
+      color: #faf5f7;
+      text-shadow: 0 0 16px rgba(205, 28, 50, 0.38);
     }
 
     .bio {
-      margin-top: 5px;
-      margin-bottom: 22px;
-      font-size: 0.86rem;
-      letter-spacing: 0.08em;
-      text-transform: lowercase;
-      color: rgba(214, 198, 202, 0.65);
+      margin-top: 6px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.88rem;
+      letter-spacing: 0.14em;
+      color: rgba(224, 202, 207, 0.68);
     }
 
     .links {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 11px;
     }
 
-    .btn, .copy-row {
+    .btn,
+    .copy-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 13px 16px;
-      border-radius: 10px;
-      background: rgba(18, 15, 20, 0.84);
+      padding: 14px 17px;
+      border-radius: 11px;
+      background: rgba(18, 14, 21, 0.88);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #f4eff1;
+      color: #f6f1f3;
       text-decoration: none;
-      font-size: 0.94rem;
+      font-size: 0.96rem;
       font-weight: 500;
       letter-spacing: 0.01em;
       transition: transform 0.16s ease, background 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
     }
 
-    .btn:hover, .copy-row:hover {
-      background: rgba(34, 12, 18, 0.92);
-      border-color: rgba(210, 38, 60, 0.55);
-      box-shadow: 0 0 16px rgba(165, 20, 40, 0.22);
+    .btn:hover,
+    .copy-row:hover {
+      background: rgba(38, 11, 19, 0.94);
+      border-color: rgba(220, 38, 60, 0.6);
+      box-shadow: 0 0 18px rgba(175, 18, 38, 0.24);
       transform: translateY(-1px);
     }
 
+    .copy-row {
+      text-align: left;
+    }
+
+    .discord-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
     .meta {
-      font-size: 0.8rem;
-      color: rgba(215, 196, 200, 0.58);
+      font-size: 0.82rem;
+      color: rgba(222, 198, 204, 0.62);
     }
 
     .copy-btn {
-      background: rgba(145, 20, 38, 0.28);
-      border: 1px solid rgba(210, 38, 60, 0.35);
-      border-radius: 7px;
-      color: #f7eef0;
-      padding: 5px 10px;
-      font-size: 0.76rem;
-      font-weight: 500;
+      background: rgba(160, 18, 38, 0.3);
+      border: 1px solid rgba(220, 38, 60, 0.42);
+      border-radius: 8px;
+      color: #faf3f5;
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
       cursor: pointer;
-      transition: background 0.15s ease, border-color 0.15s ease;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
     }
 
     .copy-btn:hover {
-      background: rgba(185, 26, 48, 0.48);
-      border-color: rgba(235, 55, 78, 0.65);
+      background: rgba(200, 24, 46, 0.54);
+      border-color: rgba(242, 62, 86, 0.75);
+    }
+
+    .copy-btn:active {
+      transform: scale(0.96);
+    }
+
+    .copy-btn.copied {
+      background: rgba(210, 34, 56, 0.68);
+      border-color: rgba(255, 110, 130, 0.85);
     }
   </style>
 </head>
 <body>
   <main class="card">
-    <h1 class="handle">One and only Nihilia</h1>
+    <h1 class="handle">The one and only Nihilia</h1>
     <p class="bio">2718</p>
 
     <div class="links">
@@ -136,9 +160,9 @@
       </a>
 
       <div class="copy-row">
-        <div>
-          <div>Discord</div>
-          <div class="meta" id="discord-user">nihilia.</div>
+        <div class="discord-info">
+          <span>Discord</span>
+          <span class="meta" id="discord-user">nihilia.</span>
         </div>
         <button class="copy-btn" type="button" onclick="copyDiscord(this)">Copy</button>
       </div>
@@ -146,12 +170,45 @@
   </main>
 
   <script>
+    function fallbackCopy(text) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand("copy");
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    }
+
     function copyDiscord(btn) {
       const text = document.getElementById("discord-user").textContent.trim();
-      navigator.clipboard.writeText(text);
-      const original = btn.textContent;
-      btn.textContent = "Copied";
-      setTimeout(() => (btn.textContent = original), 1400);
+      const original = btn.dataset.originalLabel || btn.textContent;
+      btn.dataset.originalLabel = original;
+
+      const onSuccess = () => {
+        btn.textContent = "Copied";
+        btn.classList.add("copied");
+        clearTimeout(btn._copyTimer);
+        btn._copyTimer = setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove("copied");
+        }, 1400);
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
+          fallbackCopy(text);
+          onSuccess();
+        });
+      } else {
+        fallbackCopy(text);
+        onSuccess();
+      }
     }
   </script>
 </body>
