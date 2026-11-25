@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>nihilia</title>
+  <title>@nihilia</title>
   <link rel="icon" type="image/png" href="32_Sem_Titulo_20241130174733.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,13 +13,7 @@
   <style>
     body {
       font-family: 'Space Mono', monospace;
-      background-color: #060507;
-      background-image:
-        linear-gradient(180deg, rgba(6, 5, 7, 0.58) 0%, rgba(6, 5, 7, 0.82) 100%),
-        url("Nihiihihi_20260829163758.webp");
-      background-size: cover;
-      background-position: center 32%;
-      background-attachment: fixed;
+      background-color: #000000;
       color: #ffffff;
     }
 
@@ -76,14 +70,14 @@
 <body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 relative selection:bg-white selection:text-black">
   <div class="fixed inset-0 scanlines z-50 pointer-events-none"></div>
 
-  <div class="enter-overlay fixed inset-0 z-40 flex items-center justify-center bg-black/85 backdrop-blur-md cursor-pointer" id="enter-overlay" onclick="enterSite()">
+  <div class="enter-overlay fixed inset-0 z-40 flex items-center justify-center bg-black/90 backdrop-blur-md cursor-pointer" id="enter-overlay" onclick="enterSite()">
     <span class="text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white border-2 border-white bg-black px-5 py-3 shadow-[4px_4px_0px_#ffffff]">
       click to enter
     </span>
   </div>
 
   <button
-    class="fixed top-4 left-4 z-30 w-10 h-10 border-2 border-white bg-black/90 text-white hover:bg-white hover:text-black flex items-center justify-center pixel-btn cursor-pointer"
+    class="fixed top-4 left-4 z-30 w-10 h-10 border-2 border-white bg-black text-white hover:bg-white hover:text-black flex items-center justify-center pixel-btn cursor-pointer"
     id="mute-btn"
     type="button"
     onclick="toggleMute()"
@@ -128,7 +122,7 @@
         href="https://open.spotify.com/user/314tsfyhizcxmpy4m5goltyam73q"
         target="_blank"
         rel="noopener noreferrer"
-        class="pixel-btn block w-full p-3.5 border-2 border-white bg-black/90 hover:bg-white hover:text-black group"
+        class="pixel-btn block w-full p-3.5 border-2 border-white bg-black hover:bg-white hover:text-black group"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
@@ -148,7 +142,7 @@
         href="https://steamcommunity.com/id/1sirius/"
         target="_blank"
         rel="noopener noreferrer"
-        class="pixel-btn block w-full p-3.5 border-2 border-white bg-black/90 hover:bg-white hover:text-black group"
+        class="pixel-btn block w-full p-3.5 border-2 border-white bg-black hover:bg-white hover:text-black group"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
@@ -168,7 +162,7 @@
         href="https://stats.fm/nihilia"
         target="_blank"
         rel="noopener noreferrer"
-        class="pixel-btn block w-full p-3.5 border-2 border-white bg-black/90 hover:bg-white hover:text-black group"
+        class="pixel-btn block w-full p-3.5 border-2 border-white bg-black hover:bg-white hover:text-black group"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
@@ -190,7 +184,7 @@
         id="discord-box"
         data-copy="nihilia."
         onclick="copyDiscord(this)"
-        class="pixel-btn block w-full p-3.5 border-2 border-white bg-black/90 hover:bg-white hover:text-black group cursor-pointer"
+        class="pixel-btn block w-full p-3.5 border-2 border-white bg-black hover:bg-white hover:text-black group cursor-pointer"
         title="Copiar Discord"
       >
         <div class="flex items-center justify-between">
@@ -210,29 +204,30 @@
       </div>
     </section>
 
-    <section class="w-full border-2 border-white bg-black/95 p-4 space-y-4">
+    <section class="w-full border-2 border-white bg-black p-4 space-y-4">
       <div class="flex items-center justify-between border-b border-neutral-800 pb-3 gap-2">
         <div class="flex items-center space-x-3 min-w-0">
           <img
+            id="cover-art"
             src="https://img.youtube.com/vi/GaLaMd_EAo4/hqdefault.jpg"
-            alt="Demolition Lovers cover"
+            alt="Track cover"
             class="w-11 h-11 object-cover border border-white shrink-0 grayscale contrast-125"
           />
           <div class="min-w-0">
             <span class="text-[10px] font-mono text-neutral-400 uppercase tracking-widest">[ NOW PLAYING ]</span>
-            <div class="text-xs font-bold font-mono tracking-wider text-white mt-0.5 truncate">
+            <div id="track-title" class="text-xs font-bold font-mono tracking-wider text-white mt-0.5 truncate">
               DEMOLITION LOVERS
             </div>
-            <div class="text-[10px] text-neutral-400 font-mono truncate">MY CHEMICAL ROMANCE</div>
+            <div id="track-artist" class="text-[10px] text-neutral-400 font-mono truncate">MY CHEMICAL ROMANCE</div>
           </div>
         </div>
 
         <div class="flex items-center space-x-1 font-mono shrink-0">
           <button
             type="button"
-            onclick="restartAudio()"
+            onclick="prevTrack()"
             class="w-7 h-7 border border-white flex items-center justify-center text-[10px] hover:bg-white hover:text-black cursor-pointer"
-            title="Reiniciar"
+            title="Anterior"
           >
             |&#9664;
           </button>
@@ -244,6 +239,14 @@
           >
             <span id="play-symbol">&#9654;</span>
           </button>
+          <button
+            type="button"
+            onclick="nextTrack()"
+            class="w-7 h-7 border border-white flex items-center justify-center text-[10px] hover:bg-white hover:text-black cursor-pointer"
+            title="Próxima"
+          >
+            &#9654;|
+          </button>
         </div>
       </div>
 
@@ -253,16 +256,11 @@
         </div>
         <div class="flex justify-between text-[9px] font-mono text-neutral-400 tabular-nums">
           <span id="current-time">0:00</span>
-          <span id="duration-time">6:07</span>
+          <span id="duration-time">06:07</span>
         </div>
       </div>
 
-      <div class="space-y-1.5 pt-1 text-[11px] font-mono border-t border-neutral-900">
-        <div onclick="togglePlay()" class="flex justify-between text-white font-bold bg-neutral-900/80 px-2 py-1 cursor-pointer">
-          <span class="truncate"><span id="track-indicator">&#9654;</span> 01. DEMOLITION LOVERS</span>
-          <span class="text-neutral-400 text-[10px] ml-2 shrink-0">06:07</span>
-        </div>
-      </div>
+      <div id="tracklist" class="space-y-1.5 pt-1 text-[11px] font-mono border-t border-neutral-900"></div>
     </section>
   </main>
 
@@ -272,18 +270,77 @@
 
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-    const VIDEO_ID = "GaLaMd_EAo4";
+    const titleTarget = "@nihilia";
+    let titleIdx = 0;
+    let titlePause = false;
+
+    function animateTitle() {
+      if (!titlePause) {
+        if (titleIdx <= titleTarget.length) {
+          document.title = titleTarget.slice(0, titleIdx) || "\u200B";
+          titleIdx++;
+          setTimeout(animateTitle, 150);
+        } else {
+          titlePause = true;
+          setTimeout(animateTitle, 900);
+        }
+      } else {
+        titlePause = false;
+        titleIdx = 0;
+        document.title = "\u200B";
+        setTimeout(animateTitle, 450);
+      }
+    }
+
+    animateTitle();
+
+    const playlist = [
+      {
+        id: "GaLaMd_EAo4",
+        title: "DEMOLITION LOVERS",
+        artist: "MY CHEMICAL ROMANCE",
+        duration: "06:07",
+        cover: "https://img.youtube.com/vi/GaLaMd_EAo4/hqdefault.jpg"
+      },
+      {
+        id: "v2vWDWxYJBc",
+        title: "PINK TRIANGLE",
+        artist: "WEEZER",
+        duration: "03:59",
+        cover: "https://img.youtube.com/vi/v2vWDWxYJBc/hqdefault.jpg"
+      },
+      {
+        id: "_wlOcEF_n5o",
+        title: "PUPPY PRINCESS",
+        artist: "HOT FREAKS",
+        duration: "04:16",
+        cover: "https://img.youtube.com/vi/_wlOcEF_n5o/hqdefault.jpg"
+      },
+      {
+        id: "pi7334n4cdo",
+        title: "I WANNA BE YOUR BOYFRIEND",
+        artist: "HOT FREAKS",
+        duration: "02:37",
+        cover: "https://img.youtube.com/vi/pi7334n4cdo/hqdefault.jpg"
+      }
+    ];
+
+    let currentIndex = 0;
     let ytPlayer = null;
     let ytReady = false;
     let wantsPlay = false;
     let isMuted = false;
+    let isPlayingState = false;
     let progressTimer = null;
 
     const progressFill = document.getElementById("progress-fill");
     const currentTimeEl = document.getElementById("current-time");
     const durationTimeEl = document.getElementById("duration-time");
     const playSymbol = document.getElementById("play-symbol");
-    const trackIndicator = document.getElementById("track-indicator");
+    const trackTitleEl = document.getElementById("track-title");
+    const trackArtistEl = document.getElementById("track-artist");
+    const coverArtEl = document.getElementById("cover-art");
+    const tracklistEl = document.getElementById("tracklist");
 
     function formatTime(sec) {
       if (!isFinite(sec) || sec < 0) return "0:00";
@@ -292,9 +349,64 @@
       return `${m}:${s}`;
     }
 
+    function renderTracklist() {
+      tracklistEl.innerHTML = "";
+      playlist.forEach((track, idx) => {
+        const active = idx === currentIndex;
+        const row = document.createElement("div");
+        row.className = active
+          ? "flex justify-between text-white font-bold bg-neutral-900 px-2 py-1 cursor-pointer"
+          : "flex justify-between text-neutral-400 hover:text-white px-2 py-0.5 cursor-pointer";
+        row.onclick = () => selectTrack(idx, true);
+
+        const num = String(idx + 1).padStart(2, "0");
+        const prefix = active ? (isPlayingState ? "&#9654;" : "&#9632;") : "";
+        row.innerHTML = `
+          <span class="truncate">${prefix} ${num}. ${track.title}</span>
+          <span class="text-neutral-400 text-[10px] ml-2 shrink-0">${track.duration}</span>
+        `;
+        tracklistEl.appendChild(row);
+      });
+    }
+
+    function updateTrackUI() {
+      const track = playlist[currentIndex];
+      trackTitleEl.textContent = track.title;
+      trackArtistEl.textContent = track.artist;
+      coverArtEl.src = track.cover;
+      durationTimeEl.textContent = track.duration;
+      currentTimeEl.textContent = "0:00";
+      progressFill.style.width = "0%";
+      renderTracklist();
+    }
+
     function updatePlayState(playing) {
+      isPlayingState = playing;
       playSymbol.innerHTML = playing ? "&#10074;&#10074;" : "&#9654;";
-      trackIndicator.innerHTML = playing ? "&#9654;" : "&#9632;";
+      renderTracklist();
+    }
+
+    function selectTrack(idx, autoPlay) {
+      currentIndex = (idx + playlist.length) % playlist.length;
+      updateTrackUI();
+      if (autoPlay) {
+        wantsPlay = true;
+      }
+      if (ytPlayer && ytReady) {
+        if (autoPlay) {
+          ytPlayer.loadVideoById(playlist[currentIndex].id);
+        } else {
+          ytPlayer.cueVideoById(playlist[currentIndex].id);
+        }
+      }
+    }
+
+    function prevTrack() {
+      selectTrack(currentIndex - 1, true);
+    }
+
+    function nextTrack() {
+      selectTrack(currentIndex + 1, true);
     }
 
     function startProgressLoop() {
@@ -313,11 +425,9 @@
 
     function onYouTubeIframeAPIReady() {
       ytPlayer = new YT.Player("yt-player", {
-        videoId: VIDEO_ID,
+        videoId: playlist[0].id,
         playerVars: {
           autoplay: 0,
-          loop: 1,
-          playlist: VIDEO_ID,
           controls: 0,
           rel: 0,
           modestbranding: 1,
@@ -327,10 +437,6 @@
           onReady: (event) => {
             ytReady = true;
             event.target.setVolume(45);
-            const dur = event.target.getDuration();
-            if (dur > 0) {
-              durationTimeEl.textContent = formatTime(dur);
-            }
             if (wantsPlay) {
               event.target.playVideo();
             }
@@ -339,9 +445,12 @@
             if (event.data === YT.PlayerState.PLAYING) {
               updatePlayState(true);
               startProgressLoop();
-            } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+            } else if (event.data === YT.PlayerState.PAUSED) {
               updatePlayState(false);
               clearInterval(progressTimer);
+            } else if (event.data === YT.PlayerState.ENDED) {
+              clearInterval(progressTimer);
+              nextTrack();
             }
           }
         }
@@ -373,13 +482,6 @@
         ytPlayer.playVideo();
         updatePlayState(true);
       }
-    }
-
-    function restartAudio() {
-      if (!ytPlayer || !ytReady) return;
-      ytPlayer.seekTo(0, true);
-      ytPlayer.playVideo();
-      wantsPlay = true;
     }
 
     function toggleMute() {
@@ -445,6 +547,8 @@
         onSuccess();
       }
     }
+
+    updateTrackUI();
   </script>
 </body>
 </html>
