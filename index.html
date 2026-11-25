@@ -1,340 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>nihilia</title>
   <link rel="icon" type="image/png" href="32_Sem_Titulo_20241130174733.png" />
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
+  <style>
     body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: #f4eff1;
+      font-family: 'Space Mono', monospace;
       background-color: #060507;
       background-image:
-        linear-gradient(180deg, rgba(6, 5, 7, 0.28) 0%, rgba(6, 5, 7, 0.55) 100%),
+        linear-gradient(180deg, rgba(6, 5, 7, 0.58) 0%, rgba(6, 5, 7, 0.82) 100%),
         url("Nihiihihi_20260829163758.webp");
       background-size: cover;
       background-position: center 32%;
       background-attachment: fixed;
-      overflow-x: hidden;
+      color: #ffffff;
+    }
+
+    .pixel-font {
+      font-family: 'Press Start 2P', monospace;
+    }
+
+    .pixel-btn {
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .pixel-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0px #ffffff;
+    }
+
+    .pixel-btn:active {
+      transform: translate(0, 0);
+      box-shadow: 0px 0px 0px transparent;
+    }
+
+    .scanlines {
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0) 50%,
+        rgba(0, 0, 0, 0.28) 50%,
+        rgba(0, 0, 0, 0.28)
+      );
+      background-size: 100% 4px;
+      pointer-events: none;
     }
 
     .enter-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(5, 4, 7, 0.88);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      cursor: pointer;
-      transition: opacity 0.45s ease, visibility 0.45s ease;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
 
     .enter-overlay.hidden {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-    }
-
-    .enter-text {
-      font-size: 1.05rem;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: lowercase;
-      color: rgba(250, 245, 247, 0.88);
-      text-shadow: 0 0 18px rgba(220, 38, 60, 0.55);
-      animation: pulse 2.2s infinite ease-in-out;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.55; }
-      50% { opacity: 1; }
-    }
-
-    .mute-btn {
-      position: fixed;
-      top: 18px;
-      left: 18px;
-      z-index: 50;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      background: rgba(14, 11, 17, 0.62);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #f4eff1;
-      cursor: pointer;
-      transition: background 0.18s ease, border-color 0.18s ease, transform 0.14s ease;
-    }
-
-    .mute-btn:hover {
-      background: rgba(38, 11, 19, 0.82);
-      border-color: rgba(220, 38, 60, 0.55);
-      transform: scale(1.04);
-    }
-
-    .wrapper {
-      width: 100%;
-      max-width: 450px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      z-index: 10;
-    }
-
-    .card {
-      width: 100%;
-      padding: 34px 26px 26px;
-      border-radius: 20px;
-      background: rgba(12, 10, 15, 0.58);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
-      text-align: center;
-    }
-
-    .avatar {
-      width: 102px;
-      height: 102px;
-      margin: 0 auto 14px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(255, 255, 255, 0.16);
-      box-shadow: 0 0 26px rgba(198, 28, 48, 0.32);
-    }
-
-    .handle {
-      font-size: 1.55rem;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      color: #ffffff;
-      text-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
-    }
-
-    .bio {
-      margin-top: 5px;
-      font-size: 0.85rem;
-      letter-spacing: 0.14em;
-      color: rgba(235, 224, 228, 0.75);
-    }
-
-    .discord-box {
-      margin: 18px auto 20px;
-      padding: 10px 14px;
-      max-width: 280px;
-      border-radius: 13px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      cursor: pointer;
-      transition: background 0.16s ease, border-color 0.16s ease, transform 0.14s ease;
-    }
-
-    .discord-box:hover {
-      background: rgba(255, 255, 255, 0.09);
-      border-color: rgba(220, 38, 60, 0.5);
-      transform: translateY(-1px);
-    }
-
-    .discord-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-align: left;
-    }
-
-    .discord-icon-wrap {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #ffffff;
-      flex-shrink: 0;
-    }
-
-    .discord-icon-wrap svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    .discord-name {
-      font-size: 0.86rem;
-      font-weight: 600;
-      color: #f6f1f3;
-    }
-
-    .discord-status {
-      font-size: 0.74rem;
-      color: rgba(224, 202, 207, 0.62);
-    }
-
-    .copy-pill {
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 4px 9px;
-      border-radius: 7px;
-      background: rgba(175, 18, 38, 0.35);
-      border: 1px solid rgba(220, 38, 60, 0.45);
-      color: #faf3f5;
-      transition: background 0.15s ease;
-    }
-
-    .discord-box.copied .copy-pill {
-      background: rgba(210, 34, 56, 0.75);
-    }
-
-    .social-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 6px;
-    }
-
-    .social-link {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #ffffff;
-      text-decoration: none;
-      transition: transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
-    }
-
-    .social-link:hover {
-      background: rgba(220, 38, 60, 0.32);
-      border-color: rgba(220, 38, 60, 0.65);
-      box-shadow: 0 0 16px rgba(220, 38, 60, 0.35);
-      transform: translateY(-2px);
-    }
-
-    .social-link svg {
-      width: 19px;
-      height: 19px;
-    }
-
-    .player-card {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 16px;
-      background: rgba(12, 10, 15, 0.58);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .cover-art {
-      width: 44px;
-      height: 44px;
-      border-radius: 9px;
-      object-fit: cover;
-      flex-shrink: 0;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .track-info {
-      flex: 1;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .track-title {
-      font-size: 0.84rem;
-      font-weight: 600;
-      color: #faf5f7;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .progress-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .time {
-      font-size: 0.7rem;
-      color: rgba(224, 202, 207, 0.65);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .progress-bar {
-      flex: 1;
-      height: 4px;
-      border-radius: 99px;
-      background: rgba(255, 255, 255, 0.14);
-      cursor: pointer;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      background: #e12640;
-      border-radius: 99px;
-    }
-
-    .player-controls {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .ctrl-btn {
-      background: none;
-      border: none;
-      color: rgba(244, 239, 241, 0.85);
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.15s ease, color 0.15s ease;
-    }
-
-    .ctrl-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #ffffff;
     }
 
     #yt-player-container {
@@ -347,94 +73,195 @@
     }
   </style>
 </head>
-<body>
-  <div class="enter-overlay" id="enter-overlay" onclick="enterSite()">
-    <span class="enter-text">click to enter</span>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 relative selection:bg-white selection:text-black">
+  <div class="fixed inset-0 scanlines z-50 pointer-events-none"></div>
+
+  <div class="enter-overlay fixed inset-0 z-40 flex items-center justify-center bg-black/85 backdrop-blur-md cursor-pointer" id="enter-overlay" onclick="enterSite()">
+    <span class="text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white border-2 border-white bg-black px-5 py-3 shadow-[4px_4px_0px_#ffffff]">
+      click to enter
+    </span>
   </div>
 
-  <button class="mute-btn" id="mute-btn" type="button" onclick="toggleMute()" title="Mute / Unmute">
-    <svg id="vol-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <button
+    class="fixed top-4 left-4 z-30 w-10 h-10 border-2 border-white bg-black/90 text-white hover:bg-white hover:text-black flex items-center justify-center pixel-btn cursor-pointer"
+    id="mute-btn"
+    type="button"
+    onclick="toggleMute()"
+    title="Mute / Unmute"
+  >
+    <svg id="vol-on" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
       <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
       <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
     </svg>
-    <svg id="vol-off" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg id="vol-off" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
       <line x1="23" y1="9" x2="17" y2="15"></line>
       <line x1="17" y1="9" x2="23" y2="15"></line>
     </svg>
   </button>
 
-  <main class="wrapper">
-    <section class="card">
-      <img class="avatar" src="nihil.jpg" alt="Nihilia avatar" />
-      <h1 class="handle">The one and only Nihilia</h1>
-      <p class="bio">2718</p>
-
-      <div class="discord-box" id="discord-box" data-copy="nihilia." onclick="copyDiscord(this)" title="Copiar Discord">
-        <div class="discord-left">
-          <span class="discord-icon-wrap" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
-            </svg>
-          </span>
-          <div>
-            <div class="discord-name">Discord</div>
-            <div class="discord-status">click to copy</div>
-          </div>
+  <main class="w-full max-w-md mx-auto flex flex-col items-center z-10 space-y-6">
+    <header class="flex flex-col items-center text-center space-y-3">
+      <div class="relative p-1 border-2 border-white bg-black">
+        <img
+          src="nihil.jpg"
+          alt="Avatar de The one and only Nihilia"
+          class="w-28 h-28 object-cover grayscale contrast-125"
+        />
+        <div class="absolute -bottom-2 -right-2 bg-white text-black px-1.5 py-0.5 text-[9px] font-bold tracking-widest uppercase">
+          ONLINE
         </div>
-        <span class="copy-pill" id="copy-label">Copy</span>
       </div>
 
-      <div class="social-row">
-        <a class="social-link" href="https://open.spotify.com/user/314tsfyhizcxmpy4m5goltyam73q" target="_blank" rel="noopener noreferrer" title="Spotify">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
-          </svg>
-        </a>
+      <div class="pt-2">
+        <h1 class="text-lg sm:text-xl font-bold tracking-widest text-white uppercase">The one and only Nihilia</h1>
+      </div>
 
-        <a class="social-link" href="https://steamcommunity.com/id/1sirius/" target="_blank" rel="noopener noreferrer" title="Steam">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/>
-          </svg>
-        </a>
+      <p class="text-xs text-neutral-300 font-mono tracking-[0.2em] pt-0.5">
+        2718
+      </p>
+    </header>
 
-        <a class="social-link" href="https://stats.fm/nihilia" target="_blank" rel="noopener noreferrer" title="stats.fm">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <rect x="2" y="11" width="4.5" height="10" rx="1.5"></rect>
-            <rect x="9.75" y="4" width="4.5" height="17" rx="1.5"></rect>
-            <rect x="17.5" y="8" width="4.5" height="13" rx="1.5"></rect>
-          </svg>
-        </a>
+    <section class="w-full space-y-3 pt-2">
+      <a
+        href="https://open.spotify.com/user/314tsfyhizcxmpy4m5goltyam73q"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="pixel-btn block w-full p-3.5 border-2 border-white bg-black/90 hover:bg-white hover:text-black group"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+            </svg>
+            <div>
+              <div class="text-xs font-bold tracking-widest uppercase">SPOTIFY</div>
+              <div class="text-[10px] text-neutral-400 group-hover:text-neutral-700 font-mono">profile</div>
+            </div>
+          </div>
+          <span class="text-sm font-bold font-mono">→</span>
+        </div>
+      </a>
+
+      <a
+        href="https://steamcommunity.com/id/1sirius/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="pixel-btn block w-full p-3.5 border-2 border-white bg-black/90 hover:bg-white hover:text-black group"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24">
+              <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.005.105.005.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 14.819C1.947 20.063 6.757 24 12.021 24c6.627 0 12-5.373 12-12S18.605 0 11.979 0z"/>
+            </svg>
+            <div>
+              <div class="text-xs font-bold tracking-widest uppercase">STEAM</div>
+              <div class="text-[10px] text-neutral-400 group-hover:text-neutral-700 font-mono">1sirius</div>
+            </div>
+          </div>
+          <span class="text-sm font-bold font-mono">→</span>
+        </div>
+      </a>
+
+      <a
+        href="https://stats.fm/nihilia"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="pixel-btn block w-full p-3.5 border-2 border-white bg-black/90 hover:bg-white hover:text-black group"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24">
+              <rect x="2" y="11" width="4.5" height="10" rx="1"></rect>
+              <rect x="9.75" y="4" width="4.5" height="17" rx="1"></rect>
+              <rect x="17.5" y="8" width="4.5" height="13" rx="1"></rect>
+            </svg>
+            <div>
+              <div class="text-xs font-bold tracking-widest uppercase">STATS.FM</div>
+              <div class="text-[10px] text-neutral-400 group-hover:text-neutral-700 font-mono">@nihilia</div>
+            </div>
+          </div>
+          <span class="text-sm font-bold font-mono">→</span>
+        </div>
+      </a>
+
+      <div
+        id="discord-box"
+        data-copy="nihilia."
+        onclick="copyDiscord(this)"
+        class="pixel-btn block w-full p-3.5 border-2 border-white bg-black/90 hover:bg-white hover:text-black group cursor-pointer"
+        title="Copiar Discord"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24">
+              <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+            </svg>
+            <div>
+              <div class="text-xs font-bold tracking-widest uppercase">DISCORD</div>
+              <div class="text-[10px] text-neutral-400 group-hover:text-neutral-700 font-mono">click to copy</div>
+            </div>
+          </div>
+          <span id="copy-label" class="text-[10px] font-bold font-mono uppercase border border-current px-2 py-0.5">
+            Copy
+          </span>
+        </div>
       </div>
     </section>
 
-    <section class="player-card">
-      <img class="cover-art" id="cover-art" src="https://img.youtube.com/vi/GaLaMd_EAo4/hqdefault.jpg" alt="Demolition Lovers cover" />
-      <div class="track-info">
-        <div class="track-title" id="track-title">My Chemical Romance — Demolition Lovers</div>
-        <div class="progress-row">
-          <span class="time" id="current-time">0:00</span>
-          <div class="progress-bar" id="progress-bar" onclick="seekAudio(event)">
-            <div class="progress-fill" id="progress-fill"></div>
+    <section class="w-full border-2 border-white bg-black/95 p-4 space-y-4">
+      <div class="flex items-center justify-between border-b border-neutral-800 pb-3 gap-2">
+        <div class="flex items-center space-x-3 min-w-0">
+          <img
+            src="https://img.youtube.com/vi/GaLaMd_EAo4/hqdefault.jpg"
+            alt="Demolition Lovers cover"
+            class="w-11 h-11 object-cover border border-white shrink-0 grayscale contrast-125"
+          />
+          <div class="min-w-0">
+            <span class="text-[10px] font-mono text-neutral-400 uppercase tracking-widest">[ NOW PLAYING ]</span>
+            <div class="text-xs font-bold font-mono tracking-wider text-white mt-0.5 truncate">
+              DEMOLITION LOVERS
+            </div>
+            <div class="text-[10px] text-neutral-400 font-mono truncate">MY CHEMICAL ROMANCE</div>
           </div>
-          <span class="time" id="duration-time">6:07</span>
+        </div>
+
+        <div class="flex items-center space-x-1 font-mono shrink-0">
+          <button
+            type="button"
+            onclick="restartAudio()"
+            class="w-7 h-7 border border-white flex items-center justify-center text-[10px] hover:bg-white hover:text-black cursor-pointer"
+            title="Reiniciar"
+          >
+            |&#9664;
+          </button>
+          <button
+            type="button"
+            onclick="togglePlay()"
+            class="w-7 h-7 border border-white flex items-center justify-center text-[10px] bg-white text-black hover:bg-neutral-200 cursor-pointer"
+            title="Play / Pause"
+          >
+            <span id="play-symbol">&#9654;</span>
+          </button>
         </div>
       </div>
-      <div class="player-controls">
-        <button class="ctrl-btn" type="button" onclick="restartAudio()" title="Reiniciar">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
-          </svg>
-        </button>
-        <button class="ctrl-btn" type="button" onclick="togglePlay()" title="Play / Pause">
-          <svg id="play-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-          <svg id="pause-icon" style="display:none;" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-          </svg>
-        </button>
+
+      <div class="space-y-1">
+        <div class="w-full bg-neutral-900 border border-white h-2 p-[1px] cursor-pointer" onclick="seekAudio(event)">
+          <div id="progress-fill" class="bg-white h-full w-0"></div>
+        </div>
+        <div class="flex justify-between text-[9px] font-mono text-neutral-400 tabular-nums">
+          <span id="current-time">0:00</span>
+          <span id="duration-time">6:07</span>
+        </div>
+      </div>
+
+      <div class="space-y-1.5 pt-1 text-[11px] font-mono border-t border-neutral-900">
+        <div onclick="togglePlay()" class="flex justify-between text-white font-bold bg-neutral-900/80 px-2 py-1 cursor-pointer">
+          <span class="truncate"><span id="track-indicator">&#9654;</span> 01. DEMOLITION LOVERS</span>
+          <span class="text-neutral-400 text-[10px] ml-2 shrink-0">06:07</span>
+        </div>
       </div>
     </section>
   </main>
@@ -452,11 +279,11 @@
     let isMuted = false;
     let progressTimer = null;
 
-    const playIcon = document.getElementById("play-icon");
-    const pauseIcon = document.getElementById("pause-icon");
     const progressFill = document.getElementById("progress-fill");
     const currentTimeEl = document.getElementById("current-time");
     const durationTimeEl = document.getElementById("duration-time");
+    const playSymbol = document.getElementById("play-symbol");
+    const trackIndicator = document.getElementById("track-indicator");
 
     function formatTime(sec) {
       if (!isFinite(sec) || sec < 0) return "0:00";
@@ -466,8 +293,8 @@
     }
 
     function updatePlayState(playing) {
-      playIcon.style.display = playing ? "none" : "block";
-      pauseIcon.style.display = playing ? "block" : "none";
+      playSymbol.innerHTML = playing ? "&#10074;&#10074;" : "&#9654;";
+      trackIndicator.innerHTML = playing ? "&#9654;" : "&#9632;";
     }
 
     function startProgressLoop() {
@@ -557,8 +384,8 @@
 
     function toggleMute() {
       isMuted = !isMuted;
-      document.getElementById("vol-on").style.display = isMuted ? "none" : "block";
-      document.getElementById("vol-off").style.display = isMuted ? "block" : "none";
+      document.getElementById("vol-on").classList.toggle("hidden", isMuted);
+      document.getElementById("vol-off").classList.toggle("hidden", !isMuted);
       if (ytPlayer && ytReady) {
         if (isMuted) {
           ytPlayer.mute();
@@ -602,11 +429,9 @@
 
       const onSuccess = () => {
         label.textContent = "Copied";
-        box.classList.add("copied");
         clearTimeout(box._copyTimer);
         box._copyTimer = setTimeout(() => {
           label.textContent = "Copy";
-          box.classList.remove("copied");
         }, 1400);
       };
 
