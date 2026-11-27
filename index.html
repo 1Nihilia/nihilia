@@ -35,6 +35,53 @@
       box-shadow: 0px 0px 0px transparent;
     }
 
+    .volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 80px;
+      height: 24px;
+      margin: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .volume-slider::-webkit-slider-runnable-track {
+      height: 4px;
+      border: 1px solid currentColor;
+      background: transparent;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 8px;
+      height: 12px;
+      margin-top: -5px;
+      border: 0;
+      border-radius: 0;
+      background: currentColor;
+    }
+
+    .volume-slider::-moz-range-track {
+      box-sizing: border-box;
+      height: 4px;
+      border: 1px solid currentColor;
+      background: transparent;
+    }
+
+    .volume-slider::-moz-range-thumb {
+      width: 8px;
+      height: 12px;
+      border: 0;
+      border-radius: 0;
+      background: currentColor;
+    }
+
+    .volume-slider:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 3px;
+    }
+
     .scanlines {
       background: linear-gradient(
         to bottom,
@@ -76,24 +123,33 @@
     </span>
   </div>
 
-  <button
-    class="fixed top-4 left-4 z-30 w-10 h-10 border-2 border-white bg-black text-white hover:bg-white hover:text-black flex items-center justify-center pixel-btn cursor-pointer"
-    id="mute-btn"
-    type="button"
-    onclick="toggleMute()"
-    title="Mute / Unmute"
+  <div
+    class="fixed top-4 left-4 z-30 h-10 border-2 border-white bg-black text-white hover:bg-white hover:text-black flex items-center justify-center gap-3 px-3 pixel-btn"
+    id="volume-control"
   >
-    <svg id="vol-on" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg id="vol-on" aria-hidden="true" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
       <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
       <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
     </svg>
-    <svg id="vol-off" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg id="vol-off" aria-hidden="true" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
       <line x1="23" y1="9" x2="17" y2="15"></line>
       <line x1="17" y1="9" x2="23" y2="15"></line>
     </svg>
-  </button>
+    <input
+      id="volume-slider"
+      class="volume-slider"
+      type="range"
+      min="0"
+      max="100"
+      step="1"
+      value="45"
+      aria-label="Volume"
+      title="Volume: 45%"
+      oninput="updateVolume()"
+    />
+  </div>
 
   <main class="w-full max-w-md mx-auto flex flex-col items-center z-10 space-y-6">
     <header class="flex flex-col items-center text-center space-y-3">
@@ -131,7 +187,7 @@
             </svg>
             <div>
               <div class="text-xs font-bold tracking-widest uppercase">SPOTIFY</div>
-              <div class="text-[10px] text-neutral-400 group-hover:text-neutral-700 font-mono">profile</div>
+              <div class="text-[10px] text-neutral-400 group-hover:text-neutral-700 font-mono">Nihilia</div>
             </div>
           </div>
           <span class="text-sm font-bold font-mono">→</span>
@@ -151,7 +207,7 @@
             </svg>
             <div>
               <div class="text-xs font-bold tracking-widest uppercase">STEAM</div>
-              <div class="text-[10px] text-neutral-400 group-hover:text-neutral-700 font-mono">1sirius</div>
+              <div class="text-[10px] text-neutral-400 group-hover:text-neutral-700 font-mono">Sirius</div>
             </div>
           </div>
           <span class="text-sm font-bold font-mono">→</span>
@@ -194,7 +250,7 @@
             </svg>
             <div>
               <div class="text-xs font-bold tracking-widest uppercase">DISCORD</div>
-              <div class="text-[10px] text-neutral-400 group-hover:text-neutral-700 font-mono">click to copy</div>
+              <div class="text-[10px] text-neutral-400 group-hover:text-neutral-700 font-mono">nihilia.</div>
             </div>
           </div>
           <span id="copy-label" class="text-[10px] font-bold font-mono uppercase border border-current px-2 py-0.5">
@@ -353,10 +409,10 @@
     let ytPlayer = null;
     let ytReady = false;
     let wantsPlay = false;
-    let isMuted = false;
     let isPlayingState = false;
     let progressTimer = null;
 
+    const volumeSlider = document.getElementById("volume-slider");
     const progressFill = document.getElementById("progress-fill");
     const currentTimeEl = document.getElementById("current-time");
     const durationTimeEl = document.getElementById("duration-time");
@@ -460,7 +516,7 @@
         events: {
           onReady: (event) => {
             ytReady = true;
-            event.target.setVolume(45);
+            updateVolume();
             if (wantsPlay) {
               event.target.playVideo();
             }
@@ -508,16 +564,18 @@
       }
     }
 
-    function toggleMute() {
-      isMuted = !isMuted;
+    function updateVolume() {
+      const volume = Number(volumeSlider.value);
+      const isMuted = volume === 0;
+      volumeSlider.title = `Volume: ${volume}%`;
       document.getElementById("vol-on").classList.toggle("hidden", isMuted);
       document.getElementById("vol-off").classList.toggle("hidden", !isMuted);
       if (ytPlayer && ytReady) {
+        ytPlayer.setVolume(volume);
         if (isMuted) {
           ytPlayer.mute();
         } else {
           ytPlayer.unMute();
-          ytPlayer.setVolume(45);
         }
       }
     }
