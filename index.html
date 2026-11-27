@@ -326,11 +326,10 @@
 
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-    // Ciclo contínuo: escreve "@nihilia" -> apaga até "@" -> reescreve "nihilia"
     const prefix = "@";
     const handle = "nihilia";
     let currentText = "";
-    let phase = "typing-full"; // "typing-full" | "deleting-to-at" | "typing-handle"
+    let phase = "typing-full"; 
 
     function animateTitle() {
       if (phase === "typing-full") {
